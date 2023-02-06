@@ -1,0 +1,78 @@
+.arrow {
+    float: right;
+    min-width: 20px;
+    min-height: 20px;
+    margin-left: 10px;
+}
+
+.swagger-badges-content-block {
+    display: flex;
+    justify-content: space-between;
+    -ms-align-items: center;
+    -o-align-items: center;
+    -webkit-align-items: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: 100%;
+    gap: 3px;
+}
+
+.swagger-bracket {
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 80px;
+    padding: 6px 15px;
+    text-align: center;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    text-shadow: 0 1px 0 rgba(0,0,0,.1);
+    font-family: sans-serif;
+}
+
+
+/* e.t.c */
+
+.swagger-bracket-ForManagerAttribute {
+    background: #9d45d4;
+    color: #fff;
+}
+
+.swagger-bracket-ForAdminAttribute {
+    background: #45abd4;
+    color: #fff;
+}
+
+.swagger-bracket-DebugAttribute {
+    background: #45d447;
+    color: #1d671e;
+}
+
+.swagger-bracket-AuthorizationTag {
+    border: 1px solid #3856c3;
+    color: #3856c3;
+}
+
+.swagger-bracket-UserTag {
+    border: 1px solid #9025bd;
+    color: #9025bd;
+}
+
+.swagger-bracket-SpotTag {
+    border: 1px solid #d3b230;
+    color: #d3b230;
+}
+
+.swagger-bracket-AdminPanelTag {
+    border: 1px solid #ab0909;
+    color: #ab0909;
+}
+
+.swagger-bracket-NonWork {
+    border: 1px solid red;
+    color: red;
+}
+
+.swagger-bracket-ForBaristaAttriute {
+    border: 1px solid #49cc90;
+    color: #49cc90;
+}

@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Fearp\\source\\repos\\eBook\\eBook-backend\\wwwroot\\ext\\custom-swagger-javascript.js",
+      "PackagePath": "staticwebassets\\ext\\custom-swagger-javascript.js"
+    },
+    {
+      "Id": "C:\\Users\\Fearp\\source\\repos\\eBook\\eBook-backend\\wwwroot\\ext\\custom-swagger-stylesheet.css",
+      "PackagePath": "staticwebassets\\ext\\custom-swagger-stylesheet.css"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.eBook-backend.props",
+      "PackagePath": "build\\eBook-backend.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.eBook-backend.props",
+      "PackagePath": "buildMultiTargeting\\eBook-backend.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.eBook-backend.props",
+      "PackagePath": "buildTransitive\\eBook-backend.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.eBook-backend.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

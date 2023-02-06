@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+
+  ebook-server:
+    container_name: ebook-server
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - ebook-db
+    restart: always
+    environment:
+      - ConnectionString=Server=ebook-db;Database=ebook-database;Username=postgres;Password=admin;Port=5432
+      - Jwt_ValidAudience=localhost
+      - Jwt_ValidIssuer=localhost
+      - JwtKey=bRhYJRlZvBj2vW4MrV5HVdPgIE6VMtCFB0kTtJ1m
+      - JwtTokenValidityInMinutes=60                                          # 
+      - JwtRefreshTokenValidityInDays=1                                       # Сколько живет рефреш токен ( сколько длиться пользовательская сессия изначально)
+      - JwtRefreshTokenValidityInDaysPersist=30
+    ports:
+      - 5001:80
+
+  ebook-db:
+    container_name: ebook-db
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=ebook-database
+    restart: always

@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "el5kXk59eYTII/mz7rWnC+WdlkOX1tT+NbH/zURpdso=",
+  "Source": "eBook-backend",
+  "BasePath": "_content/eBook-backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "eBook-backend\\wwwroot",
+      "Source": "eBook-backend",
+      "ContentRoot": "C:\\Users\\Fearp\\source\\repos\\eBook\\eBook-backend\\wwwroot\\",
+      "BasePath": "_content/eBook-backend",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Fearp\\source\\repos\\eBook\\eBook-backend\\wwwroot\\ext\\custom-swagger-javascript.js",
+      "SourceId": "eBook-backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Fearp\\source\\repos\\eBook\\eBook-backend\\wwwroot\\",
+      "BasePath": "_content/eBook-backend",
+      "RelativePath": "ext/custom-swagger-javascript.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ext\\custom-swagger-javascript.js"
+    },
+    {
+      "Identity": "C:\\Users\\Fearp\\source\\repos\\eBook\\eBook-backend\\wwwroot\\ext\\custom-swagger-stylesheet.css",
+      "SourceId": "eBook-backend",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Fearp\\source\\repos\\eBook\\eBook-backend\\wwwroot\\",
+      "BasePath": "_content/eBook-backend",
+      "RelativePath": "ext/custom-swagger-stylesheet.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ext\\custom-swagger-stylesheet.css"
+    }
+  ]
+}

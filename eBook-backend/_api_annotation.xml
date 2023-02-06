@@ -1,0 +1,2011 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>surfis-backend</name>
+    </assembly>
+    <members>
+        <member name="T:surfis_backend.ApplicationContext">
+            <summary>
+            Контекст для работы с базой данных и EF CORE.
+            </summary>
+        </member>
+        <member name="M:surfis_backend.ApplicationContext.CreateDbContext(System.String[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:surfis_backend.ApplicationContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{surfis_backend.ApplicationContext})">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.ApplicationContext.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="P:surfis_backend.ApplicationContext.Users">
+            <summary>
+            EF Модель пользователей ( работающих с сайтом )
+            </summary>
+        </member>
+        <member name="P:surfis_backend.ApplicationContext.Spots">
+            <summary>
+            EF Модель спотов
+            </summary>
+        </member>
+        <member name="P:surfis_backend.ApplicationContext.SpotWorkers">
+            <summary>
+            EF Модель работников спотов
+            </summary>
+        </member>
+        <member name="P:surfis_backend.ApplicationContext.Shifts">
+            <summary>
+            EF Модель рабочих смен спотов
+            </summary>
+        </member>
+        <member name="P:surfis_backend.ApplicationContext.UserSpotManagers">
+            <summary>
+            EF Модель (Многие:Многим) связь менеджеров и спотов
+            </summary>
+        </member>
+        <member name="P:surfis_backend.ApplicationContext.StuffWorks">
+            <summary>
+            EF Модель, для добавление сотрудника на смену
+            </summary>
+        </member>
+        <member name="P:surfis_backend.ApplicationContext.TimeStampMaps">
+            <summary>
+            EF Модель, для любых временных рамок ( только время )
+            </summary>
+        </member>
+        <member name="T:surfis_backend.ApplicationModuleExecuter">
+            <summary>
+            Класс для инциализации сервисных модулей
+            </summary>
+        </member>
+        <member name="M:surfis_backend.ApplicationModuleExecuter.RequiredProvideServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Подключаем к DI все нужные нам сервисы и репозитории.
+            </summary>
+        </member>
+        <member name="M:surfis_backend.ApplicationModuleExecuter.MigrateDatabase(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Мигририуем базу данныех ( обновляем контекст базы данных на последнюю мигарцию ).
+            </summary>
+        </member>
+        <member name="M:surfis_backend.ApplicationModuleExecuter.SeedDatabase(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>ф
+            Добавляем первоначальные данные для базы данных.
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Controllers.AuthenticationController">
+            <summary>
+            Аутентификационный модуль
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Controllers.AuthenticationController.#ctor(surfis_backend.Services.Auth.IAuthenticationService,surfis_backend.Services.Indentify.IUserService)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Controllers.AuthenticationController.Login(surfis_backend.Models.Dto.Auth.Authentication.AuthenticationRequestDto)">
+            <summary>
+            Авторизация пользователя
+            </summary>
+            <remarks>На вход подается e-mail пользователя и пароль, после чего система отдает пару токенов
+            (refresh и acess ), время жизни refresh токена, роль пользователя, и параметр isPersist, означающий, на сколько
+            длительно будет сессия пользователя.
+            </remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.AuthenticationController.RefreshToken(surfis_backend.Models.Dto.Auth.Token.TokenModelThroughDto)">
+            <summary>
+            Обновить hwt-token ( refresh-token )
+            </summary>
+            <remarks>Обновить пару устаревших токенов, метод отдаст новую пару токенов.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.AuthenticationController.GetCoockieUser(surfis_backend.Models.Dto.Auth.Token.TokenModelThroughDto)">
+            <summary>
+            GetUser on coockie, post attr because debug method
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Controllers.AuthenticationController.LogOut(surfis_backend.Models.Dto.Auth.Token.TokenModelThroughDto)">
+            <summary>
+            Выйти на стороне сервиса
+            </summary>
+            <remarks>Метод, который в ручную истекает рефреш токен. На стороне клиента токен должен быть уничтожен из localStorage.</remarks>
+        </member>
+        <member name="T:surfis_backend.Controllers.BaristaController">
+            <summary>
+            Модуль для работы с баристой
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Controllers.BaristaController.#ctor(surfis_backend.Services.Spot.IStuffService,surfis_backend.Services.Indentify.IUserService,surfis_backend.Services.Spot.ISpotService)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Controllers.BaristaController.OpenShift(surfis_backend.Models.Dto.Spot.Barista.OpenShift.OpenShiftRequestDto)">
+            <summary>Открыть смену</summary>
+            <remarks>Метод открывает смену для баристы.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.BaristaController.CloseShift(surfis_backend.Models.Dto.Spot.Barista.CloseShift.CloseShiftRequestDto)">
+            <summary>Закрыть теущую смену</summary>
+            <remarks>Метод закрывает смену для баристы.</remarks>
+        </member>
+        <member name="T:surfis_backend.Controllers.BaseControllerAttribute">
+            <summary>
+            Базвоый метод, добавляющий аттрибуты в конструкторы
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Controllers.SpotController">
+            <summary>
+            Модуль работы со спотами
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Controllers.SpotController.#ctor(surfis_backend.Services.Spot.ISpotService,surfis_backend.Services.Indentify.IUserService)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Controllers.SpotController.GetSpotListForManager">
+            <summary>
+            Выводит список всех спотов
+            </summary>
+            <remarks>Метод вернёт список спотов ( название + ид ) для определённого менеджера.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.SpotController.GetSingleSpot(surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerRequestDto)">
+            <summary>
+            Выводит информация о единичном споте
+            </summary>
+            <remarks>Выведет основную информацию о споте при входе в дэшборд управляющего спотом.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.SpotController.OnBoardingSpotConfigure(surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto)">
+            <summary>
+            Обновление спота через онбординг
+            </summary>
+            <remarks>Метод сохраняет данные менеджера, прошедшего онбординг для спота.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.SpotController.InitializeSpot(surfis_backend.Models.Dto.Spot.Admin.SpotInitialize.SpotInitializeRequestDto)">
+            <summary>
+            Инициализация нового спота
+            </summary>
+            <remarks>Создать пустой спот, с некоторыми изначальными общими данными.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.SpotController.GetAllSpotList">
+            <summary>
+            Получить список всех спотов ( для админ-панели )
+            </summary>
+            <remarks>Получить список всех спотов, что есть в системе.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.SpotController.EditSingleSpot(surfis_backend.Models.Dto.Spot.Admin.EditSingleSpot.EditSingleSpotInformationRequestDto)">
+            <summary>
+            Изменить информацию о споте ( админ-панель )
+            </summary>
+            <remarks>Обновить общую иформацию о споте.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.SpotController.SetNewManagerIntoSpot(surfis_backend.Models.Dto.Spot.Admin.SetNewSpot.SetNewSpotRequestDto)">
+            <summary>
+            Установить нового менеджера для спота
+            </summary>
+            <remarks>Устанавливает нового менеджера для определённого спота, или заменяет сторого на нового.</remarks>
+        </member>
+        <member name="T:surfis_backend.Controllers.StuffController">
+            <summary>
+            Модуль работы со сменами
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.#ctor(surfis_backend.Services.Spot.IStuffService,surfis_backend.Services.Spot.ISpotService,surfis_backend.Services.Indentify.IUserService)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.GetSpotShifts(surfis_backend.Models.Dto.Spot.Stuff.GetSpotShifts.GetSpotShiftsRequestDto)">
+            <summary>Получить список смен для спота ( помимо "Все смены" )</summary>
+            <remarks>Метод выводит список всех кастомных смен, связанных со спотом.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.GetAllShiftWorkers(surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersSchedule.GetAllShiftWorkersScheduleRequestDto)">
+            <summary>Получить все смены в определённом промежутке и с определёнными сменами</summary>
+            <remarks>Метод выводит список всех смен и нужной информации для вкладки "График работы".</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.AddWorkersToShift(surfis_backend.Models.Dto.Spot.Stuff.AddWorkerToShift.AddWorkerToShiftRequestDto)">
+            <summary>Добавить сотрудника на смену</summary>
+            <remarks>Метод добавляет сотрудника на смену.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.EditWorkerShiftPlan(surfis_backend.Models.Dto.Spot.Stuff.EditWorkerShiftPlan.GetEditWorkerShiftPlanRequestDto)">
+            <summary>Получить данные для формы запроса: edit-worker-shift-plan</summary>
+            <remarks>`edit-worker-shift-plan`: Метод изменяет сотрудника, который уже на смене ( только план )</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.EditWorkerShiftPlan(surfis_backend.Models.Dto.Spot.Stuff.EditWorkerShiftPlan.EditWorkerShiftPlanRequestDto)">
+            <summary>Редактирование сотрудника на смене ( только план )</summary>
+            <remarks>Метод изменяет сотрудника, который уже на смене ( только план )</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.EditWorkerShiftPlanFact(surfis_backend.Models.Dto.Spot.Stuff.EditWorkerShiftPlanFact.GetEditWorkerShiftPlanFactRequestDto)">
+            <summary>Получить данные для формы запроса: edit-worker-shift-plan-fact</summary>
+            <remarks>`edit-worker-shift-plan-fact`: Метод изменяет сотрудника, который уже на смене ( план и факт ).</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.EditWorkerShiftPlanFact(surfis_backend.Models.Dto.Spot.Stuff.EditWorkerShiftPlanFact.EditWorkerShiftPlanFactRequestDto)">
+            <summary>Редактирование сотрудника на смене ( план и факт )</summary>
+            <remarks>Метод изменяет сотрудника, который уже на смене ( план и факт ).</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.GetAllShiftWorkersTableTime(surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.GetAllShiftWorkersTableTimeRequestDto)">
+            <summary>Получение списка работников по споту в определённый промежуток, с выводом итогов</summary>
+            <remarks>Метод выводит список всех кастомных смен, связанных со спотом.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.EditPayWorker(surfis_backend.Models.Dto.Spot.Stuff.EditPayWorker.GetEditPayWorkerRequestDto)">
+            <summary>Получить данные для формы запроса: edit-pay-worker</summary>
+            <remarks>`edit-pay-worker`: Метод обновляет ставку работника.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.EditPayWorker(surfis_backend.Models.Dto.Spot.Stuff.EditPayWorker.EditPayWorkerRequestDto)">
+            <summary>Изменение ставки работника</summary>
+            <remarks>Метод обновляет ставку работника.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.GetAllShiftWorkersListWorkers(surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersListWorkers.GetAllShiftWorkersListWorkersRequestDto)">
+            <summary>Получение списка работников с общей информацией</summary>
+            <remarks>Метод получает список работников с общий информацией.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.EditShiftWorkersInfo(surfis_backend.Models.Dto.Spot.Stuff.EditShiftWorkersInfo.GetEditShiftWorkersInfoRequestDto)">
+            <summary>Получить данные для формы запроса: edit-shiftworkers-info</summary>
+            <remarks>`edit-shiftworkers-info`: Редактирование сотрудника ( информация ).</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.EditShiftWorkersInfo(surfis_backend.Models.Dto.Spot.Stuff.EditShiftWorkersInfo.EditShiftWorkersInfoRequestDto)">
+            <summary>Редактирование сотрудника ( информация )</summary>
+            <remarks>Метод редактирует сотрудника ( информация ).</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.CreateNewWorker(surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.GetCreateNewWorkerRequestDto)">
+            <summary>Получить данные для формы запроса: create-new-worker</summary>
+            <remarks>`create-new-worker`: Создание нового сотрудника.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.StuffController.CreateNewWorker(surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.CreateNewWorkerRequestDto)">
+            <summary>Создание нового сотрудника</summary>
+            <remarks>Метод создает нового сотрудника.</remarks>
+        </member>
+        <member name="T:surfis_backend.Controllers.UserController">
+            <summary>
+            Модуль работы с системными пользователями
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Controllers.UserController.#ctor(surfis_backend.Services.Indentify.IUserService)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Controllers.UserController.GetUserInfo">
+            <summary>
+            Информация о текущем пользователе
+            </summary>
+            <remarks>Выведет общую информацию о текущем пользователе.</remarks>
+        </member>
+        <member name="M:surfis_backend.Controllers.UserController.RegisterUser(surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto)">
+            <summary>
+            Зарегистрировать пользователя с помощью админ панели
+            </summary>
+            <remarks>Создать нового пользователя в системе, выдать ему роль.</remarks>
+        </member>
+        <member name="T:surfis_backend.Migrations.initial">
+            <inheritdoc />
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Migrations.initial01">
+            <inheritdoc />
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.initial01.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.initial01.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.initial01.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Migrations.initial02">
+            <inheritdoc />
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.initial02.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.initial02.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.initial02.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Migrations.test01">
+            <inheritdoc />
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.test01.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.test01.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.test01.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Migrations.test02">
+            <inheritdoc />
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.test02.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.test02.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.test02.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Migrations.userly_sportconfig_base">
+            <inheritdoc />
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.userly_sportconfig_base.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.userly_sportconfig_base.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.userly_sportconfig_base.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Migrations.jwt_01">
+            <inheritdoc />
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.jwt_01.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.jwt_01.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.jwt_01.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Migrations.spotmanagment">
+            <inheritdoc />
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.spotmanagment.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.spotmanagment.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.spotmanagment.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Migrations.hashed">
+            <inheritdoc />
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.hashed.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.hashed.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.hashed.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Migrations.SpotStatus">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.SpotStatus.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.SpotStatus.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.SpotStatus.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="T:surfis_backend.Migrations.PatronymicEdit">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.PatronymicEdit.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.PatronymicEdit.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.PatronymicEdit.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="T:surfis_backend.Migrations.delete_patraynomic_temp">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.delete_patraynomic_temp.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.delete_patraynomic_temp.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Migrations.delete_patraynomic_temp.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.ActionResultDto">
+            <summary>
+            Абстрактный класс для вывода результатов работы сервиса
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.ActionResultDto.#ctor(System.String)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.ActionResultDto.IsOk">
+            <summary>
+            Являет ли результат положительным?
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.OkResultDto`1">
+            <summary>
+            Вывод положительного результата работы метода
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.OkResultDto`1.Data">
+            <summary>
+            Данные возвращаемого объекта
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.OkResultDto`1.IsOk">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Models.Dto.BadResultDto">
+            <summary>
+            Возврат ошибки метода
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.BadResultDto.Errors">
+            <summary>
+            Список ошибок
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.BadResultDto.#ctor(System.Collections.Generic.List{surfis_backend.Models.Dto.ErrorDto},System.String)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.BadResultDto.#ctor(surfis_backend.Models.Dto.ErrorDto,System.String)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.BadResultDto.#ctor(System.String,System.String)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.BadResultDto.#ctor(System.String)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.BadResultDto.IsOk">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Models.Dto.ErrorDto">
+            <summary>
+            Моедль ошибки проверки, в сервисах и контроллерах, используется в связке с ActionResultDto
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.ErrorDto.Field">
+            <summary>
+            Название поля
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.ErrorDto.Messages">
+            <summary>
+            Ошибка, связанные с полем
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.ErrorDto.#ctor(System.String,System.String)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.ErrorDto.#ctor(System.String)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.ErrorDto.#ctor(System.Collections.Generic.List{System.String})">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Models.Dto.ErrorDto.#ctor(System.String,System.Collections.Generic.List{System.String})">
+            <summary>.ctor</summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationRequestDto">
+            <summary>
+            DTO для запроса авторизации
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationRequestDto.Email">
+            <summary>
+            E-mail пользователя, должен быть в домене @surfis.ru
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationRequestDto.Password">
+            <summary>
+            Пароль пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationRequestDto.IsPersist">
+            <summary>
+            Поле отвечающее, сколько продлится сессия пользователя. True = 30 дней, False = 1 сеанс ( закрытие вкладки ), либо 1 день открытой вкладки
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationResultDto">
+            <summary>
+            DTO для ответа авторизации
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationResultDto.Token">
+            <summary>
+            AccessToken пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationResultDto.RefreshToken">
+            <summary>
+            RefreshToken пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationResultDto.Roles">
+            <summary>
+            Роль пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationResultDto.ExpirationRefreshTokenMs">
+            <summary>
+            Время жизни рефреш-токена
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Authentication.AuthenticationResultDto.IsPersist">
+            <summary>
+            Запомнить пользователя?
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto">
+            <summary>
+            DTO для создания пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto.Email">
+            <summary>
+            Название пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto.Password">
+            <summary>
+            Пароль пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto.Name">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto.Surname">
+            <summary>
+            Фамилия пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto.Patronymic">
+            <summary>
+            Отчество пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto.PhoneNumber">
+            <summary>
+            Телефонный номер пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto.Role">
+            <summary>
+            Роль пользователя
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Auth.Register.RegisterUserResultDto">
+            <summary>
+            DTO Результат создания пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Register.RegisterUserResultDto.Email">
+            <summary>
+            Емейл зарегистрированного пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Register.RegisterUserResultDto.Passwrod">
+            <summary>
+            Пароль зарегистрированного пользователя
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Auth.Token.TokenModelThroughDto">
+            <summary>
+            Модель для работы с JWT Token
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Token.TokenModelThroughDto.AccessToken">
+            <summary>
+            Собственно сам токен
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Auth.Token.TokenModelThroughDto.RefreshToken">
+            <summary>
+            Токен обновления
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Others.TimeStampMapDto">
+            <summary>
+            DTO для сущности TimeStampMap
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Others.TimeStampMapDto.StartTime">
+            <summary>
+            Начало временной отметки
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Others.TimeStampMapDto.EndTime">
+            <summary>
+            Конец временной отметки
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Admin.AllSpotList.AllSpotListResponseDto">
+            <summary>
+            DTO для получения списка всех спотов
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Admin.AllSpotList.AllSpotListResponseDto.SpotList">
+            <summary>
+            Список спотов
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Admin.AllSpotList.SingleSpotDto">
+            <summary>
+            Дополнительная DTO при получении списка всех спотов
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Admin.AllSpotList.SingleSpotDto.Id">
+            <summary>
+            ID Спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Admin.AllSpotList.SingleSpotDto.Name">
+            <summary>
+            Название спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Admin.AllSpotList.SingleSpotDto.Status">
+            <summary>
+            Статус спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Admin.EditSingleSpot.EditSingleSpotInformationRequestDto">
+            <summary>
+            DTO для обновление информации о споте
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Admin.EditSingleSpot.EditSingleSpotInformationRequestDto.Id">
+            <summary>
+            Id спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Admin.EditSingleSpot.EditSingleSpotInformationRequestDto.NewName">
+            <summary>
+            Новое имя для спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Admin.SetNewSpot.SetNewSpotRequestDto">
+            <summary>
+            Dto для установки нового менеджера для спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Admin.SetNewSpot.SetNewSpotRequestDto.SpotId">
+            <summary>
+            ID спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Admin.SetNewSpot.SetNewSpotRequestDto.UserId">
+            <summary>
+            ID пользователя
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Admin.SpotInitialize.SpotInitializeRequestDto">
+            <summary>
+            DTO для инициализации нового спота ( в качесте админа системы )
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Admin.SpotInitialize.SpotInitializeRequestDto.Name">
+            <summary>
+            Название спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Generic.SpotWorkerDto">
+            <summary>
+            Общее DTO для информации о работнике спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Generic.SpotWorkerDto.SpotWorkerId">
+            <summary>
+            ID работника спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Generic.SpotWorkerDto.Name">
+            <summary>
+            Имя работника спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Generic.SpotWorkerDto.Surname">
+            <summary>
+            Фамилия работника спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Generic.SpotWorkerDto.HourlyRate">
+            <summary>
+            Часовая оплата
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerRequestDto">
+            <summary>
+            DTO для получения одного спота для менеджера
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerRequestDto.SpotId">
+            <summary>
+            ID спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerResultDto">
+            <summary>
+            DTO для возврата сущности Spot
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerResultDto.Name">
+            <summary>
+            Назване спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerResultDto.SpotWorkDayOpenTime">
+            <summary>
+            Рабочий день в будни
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerResultDto.SpotWeekDayOpenTime">
+            <summary>
+            Рабочий день в выходные
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerResultDto.SpotStatus">
+            <summary>
+            Статус завершённости спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Managment.SpotListForManager.SpotListForManagerResultDto">
+            <summary>
+            DTO для получения списка спотов для менеджера
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotListForManager.SpotListForManagerResultDto.SpotList">
+            <summary>
+            Список спотов
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Managment.SpotListForManager.ItemManagerSpotListDto">
+            <summary>
+            Дополнительная DTO для части списка спотов для менеджера
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotListForManager.ItemManagerSpotListDto.Id">
+            <summary>
+            ID спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotListForManager.ItemManagerSpotListDto.Name">
+            <summary>
+            Название спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto">
+            <summary>
+            DTO конфигурации онбординга
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto.Id">
+            <summary>
+            Id спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto.Name">
+            <summary>
+            Название спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto.WorkDayOpen">
+            <summary>
+            Начало работы спота в рабочий день
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto.WorkDayClose">
+            <summary>
+            Окончание работы спота в рабочий день
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto.WeekendOpen">
+            <summary>
+            Начало рабочего дня в выходной
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto.WeekendClose">
+            <summary>
+            Окончание рабочего дня в выходный
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto.SpotShifts">
+            <summary>
+            Список рабочих смен
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto.SpotWorkers">
+            <summary>
+            Список работников
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.ShiftCreationDto">
+            <summary>
+            DTO создания смены
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.ShiftCreationDto.Name">
+            <summary>
+            Имя рабочей смены
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.ShiftCreationDto.StartTime">
+            <summary>
+            Начало рабочей смены
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.ShiftCreationDto.EndTime">
+            <summary>
+            Окончание рабочей смены
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotWorkerCreationDto">
+            <summary>
+            DTO создания рабочего спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotWorkerCreationDto.Email">
+            <summary>
+            E-mail рабочего
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotWorkerCreationDto.Name">
+            <summary>
+            Имя рабочего
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotWorkerCreationDto.Surname">
+            <summary>
+            Фамилия рабочего
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotWorkerCreationDto.HourlyRate">
+            <summary>
+            Часовая ставка рабочего
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Stuff.AddWorkerToShift.AddWorkerToShiftRequestDto">
+            <summary>
+            DTO для добавления работника на смену
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.AddWorkerToShift.AddWorkerToShiftRequestDto.SpotId">
+            <summary>
+            ID спота
+            </summary> 
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.AddWorkerToShift.AddWorkerToShiftRequestDto.ShiftId">
+            <summary>
+            ID Смены или null
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.AddWorkerToShift.AddWorkerToShiftRequestDto.Date">
+            <summary>
+            Дата
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.AddWorkerToShift.AddWorkerToShiftRequestDto.WorkTime">
+            <summary>
+            Временные рамки работы
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.AddWorkerToShift.AddWorkerToShiftRequestDto.WorkerId">
+            <summary>
+            ID работника
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.CreateNewWorkerRequestDto">
+            <summary>
+            DTO для создания нового работника
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.CreateNewWorkerRequestDto.SpotId">
+            <summary>
+            ID спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.CreateNewWorkerRequestDto.NameAndSurname">
+            <summary>
+            Имя Фамилия нового работника
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.CreateNewWorkerRequestDto.Email">
+            <summary>
+            Электронная почта нового работника
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.CreateNewWorkerRequestDto.PayRate">
+            <summary>
+            Почасовая оплата нового работника
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.GetCreateNewWorkerRequestDto">
+            <summary>
+            DTO получения данных для формы создания нового работника
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.GetCreateNewWorkerRequestDto.SpotId">
+            <summary>
+            ID спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Stuff.Generic.ShiftModelDto">
+            <summary>
+            Дополнительная DTO для работы со сменой
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.Generic.ShiftModelDto.ShiftId">
+            <summary>
+            ID смены
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.Generic.ShiftModelDto.ShiftName">
+            <summary>
+            Название смены
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.GetAllShiftWorkersTableTimeResultDto">
+            <summary>
+            DTO для вывода данных в секцию `Табель рабочего времени`
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.GetAllShiftWorkersTableTimeResultDto.ListWorkers">
+            <summary>
+            Список работников
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimeResultWorkerDto">
+            <summary>
+            Дополнительная DTO для работы с секцией `Табель рабочего времени`
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimeResultWorkerDto.WorkerId">
+            <summary>
+            ID работника
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimeResultWorkerDto.Name">
+            <summary>
+            Имя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimeResultWorkerDto.Surname">
+            <summary>
+            Фамилия
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimeResultWorkerDto.PlanCountGoal">
+            <summary>
+            Работник заработал ( план ) в промежуток
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimeResultWorkerDto.FactCountGoal">
+            <summary>
+            Работник заработал ( факт ) в промежуток
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimeResultWorkerDto.GoalTimePlan">
+            <summary>
+            Работник проработал часов ( план ) за промежуток
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimeResultWorkerDto.GoalTimeFact">
+            <summary>
+            Работник проработал часов ( факт ) за промежуток
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimeResultWorkerDto.WorkerPayInformationList">
+            <summary>
+            Список секций работников для одного работника
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimePayResult">
+            <summary>
+            Дополнительная DTO для работы с секцией `Табель рабочего времени`
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimePayResult.Date">
+            <summary>
+            Дата
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimePayResult.PlanCount">
+            <summary>
+            Плановый заработок за день
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimePayResult.FactCount">
+            <summary>
+            Фактический заработок за день
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimePayResult.PlanTime">
+            <summary>
+            Плановое время работы за один день
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.TableTimePayResult.FactTime">
+            <summary>
+            Фактическое время работы за один день
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Stuff.GetSpotShifts.GetSpotShiftsRequestDto">
+            <summary>
+            DTO для запроса списка смен
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetSpotShifts.GetSpotShiftsRequestDto.SpotId">
+            <summary>
+            Id спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.Spot.Stuff.GetSpotShifts.GetSpotShiftsResultDto">
+            <summary>
+            DTO для списка смен для спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.Spot.Stuff.GetSpotShifts.GetSpotShiftsResultDto.Shifts">
+            <summary>
+            Список смен
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Dto.User.UserInfoResultDto">
+            <summary>
+            DTO для получение общей информаци о пользователе
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.User.UserInfoResultDto.Name">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.User.UserInfoResultDto.Surname">
+            <summary>
+            Фамилия пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.User.UserInfoResultDto.Patronymic">
+            <summary>
+            Отчество пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Dto.User.UserInfoResultDto.Role">
+            <summary>
+            Роль пользователя
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Entities.BaseEntity">
+            <summary>
+            Базовая модель для всех моделей
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.BaseEntity.Id">
+            <summary>
+            Id сущности
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Entities.BaseTrackEntity">
+            <summary>
+            Базовая сущность ( отслеживаемая )
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.BaseTrackEntity.CreateDate">
+            <summary>
+            Дата создания модели
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.BaseTrackEntity.UpdateDate">
+            <summary>
+            Дата обновления модели
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Entities.Identify.User">
+            <summary>
+            Базовый пользователь сайта, основа для осуществления входа\работы с сайтом
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Models.Entities.Identify.User.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Models.Entities.Identify.User.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String,surfis_backend.Models.Enums.Role,System.String,System.DateTime)">
+            <inheritdoc />
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.Email">
+            <summary>
+            Электронная почта пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.PasswordHash">
+            <summary>
+            Хэш пароля пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.PasswordSalt">
+            <summary>
+            Соль пароля пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.Name">
+            <summary>
+            Имя пользователя 
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.Surname">
+            <summary>
+            Фамилия пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.Patronymic">
+            <summary>
+            Отчество пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.PhoneNumber">
+            <summary>
+            Телефонный номер пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.RefreshToken">
+            <summary>
+            Токен обновления пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.RefreshTokenExpiryTime">
+            <summary>
+            Время жизни токена обновления пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.Role">
+            <summary>
+            Роль пользователя
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.SpotWorkerLinkId">
+            <summary>
+            Дополнтельный ключ к SpotWorker для связи one-to-zero-or-one
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Identify.User.SpotWorkerLink">
+            <summary>
+            Связанная сущность работника, если этот пользователь является работником ( например баристой )
+            Связь ( один ко одному )
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Entities.Others.TimeStampMap">
+            <summary>
+            Модель для любых временных рамок ( только время )
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Others.TimeStampMap.StartTime">
+            <summary>
+            Начало временной отметки
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Others.TimeStampMap.EndTime">
+            <summary>
+            Конец временной отметки
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Entities.Spot.Shift">
+            <summary>
+            Сущность "Смена"
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.Shift.Name">
+            <summary>
+            Название смены
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.Shift.TimeWorkShift">
+            <summary>
+            Время работы спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Entities.Spot.SpotEntity">
+            <summary>
+            Общая модель для спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.SpotEntity.Name">
+            <summary>
+            Назване спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.SpotEntity.SpotShifts">
+            <summary>
+            Смены спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.SpotEntity.SpotWorkDayOpenTime">
+            <summary>
+            Рабочий день в будни
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.SpotEntity.SpotWeekDayOpenTime">
+            <summary>
+            Рабочий день в выходные
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.SpotEntity.SpotStatus">
+            <summary>
+            Статус завершённости спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.SpotEntity.SpotWorkers">
+            <summary>
+            Список рабочих в споте
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.SpotEntity.StuffShiftWorkers">
+            <summary>
+            Рабочие смены спота
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Entities.Spot.UserSpotManager">
+            <summary>
+            Абстракция для реализации связи многие ко многим ( User x Spot )
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.UserSpotManager.SpotId">
+            <summary>
+            ID Спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Spot.UserSpotManager.UserId">
+            <summary>
+            ID Пользователя
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Entities.Staff.SpotWorker">
+            <summary>
+            Рабротники спота
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Staff.SpotWorker.ParentIdentity">
+            <summary>
+            Общие данные о пользователе дял входа и взаимодействия
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Staff.SpotWorker.HourlyRate">
+            <summary>
+            Ставка работника ( в час )
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Entities.Staff.StuffWork">
+            <summary>
+            Модель, связывающая работника и смену
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Staff.StuffWork.WorkerLinkDate">
+            <summary>
+            Дата точного дня
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Staff.StuffWork.PlannedTime">
+            <summary>
+            Запланированное время ( единое поле )
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Staff.StuffWork.Worker">
+            <summary>
+            Привязанный работник
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Staff.StuffWork.Shift">
+            <summary>
+            Кокнретная смена ( либо весь день, если null, берётся время работы спота )
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Staff.StuffWork.FactTime">
+            <summary>
+            Фактовые временные отметки работы персонала.
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Models.Entities.Staff.StuffWork.StuffWorkStatus">
+            <summary>
+            Статус смены
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Enums.Role">
+            <summary>
+            Все роли в системе
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.Role.Barista">
+            <summary>
+            Бариста
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.Role.Manager">
+            <summary>
+            Менеджер
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.Role.Admin">
+            <summary>
+            Администратор
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Enums.SpotCompletionStatus">
+            <summary>
+            Статус завершённости спота
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.SpotCompletionStatus.Empty">
+            <summary>
+            Пустой, только проинициализированный спот.
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.SpotCompletionStatus.OnBoardingComplete">
+            <summary>
+            Обнординг завершён
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.SpotCompletionStatus.EmployeesAdded">
+            <summary>
+            Сотрудники добавлены
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.SpotCompletionStatus.PrimaryExpensesIncluded">
+            <summary>
+            Первичные расходы внесены ( после добавление первого сотрудника )
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Models.Enums.StuffWorkStatus">
+            <summary>
+            Статус смены
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.StuffWorkStatus.Planned">
+            <summary>
+            Смена запланирована
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.StuffWorkStatus.InWork">
+            <summary>
+            Работник на смене
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Models.Enums.StuffWorkStatus.ShiftClosed">
+            <summary>
+            Смена закрыта
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Repositories.IEntityBaseRepository`1">
+            <summary>
+            Базовый и единый репозиторий для сущностей
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.GetAll">
+            <summary>
+            Получить все сущности
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.Count">
+            <summary>
+            Получить количество сущностей в базе данных
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.GetSingle(System.Guid)">
+            <summary>
+            Получить единую сущность по ID
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.GetSingle(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Получить одну сущность с условием
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.FindBy(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Найти все элементы с условием
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.Add(`0)">
+            <summary>
+            Добавить элемент
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.Update(`0)">
+            <summary>
+            Обновить элемент
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.Delete(`0)">
+            <summary>
+            Удалить элемент
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.DeleteWhere(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Удалить все элементы с уловием
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.IEntityBaseRepository`1.Commit">
+            <summary>
+            Сохранить данные
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Repositories.EntityBaseRepository`1">
+            <summary>
+            Базовый репозиторий для всех сущностей
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.#ctor(surfis_backend.ApplicationContext)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.GetAll">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.Count">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.GetSingle(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.GetSingle(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.FindBy(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.Add(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.Update(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.Delete(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.DeleteWhere(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Repositories.EntityBaseRepository`1.Commit">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Services.Auth.IAuthenticationService">
+            <summary>
+            Сервис для работы с авторизацией
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Auth.IAuthenticationService.Authenticate(surfis_backend.Models.Dto.Auth.Authentication.AuthenticationRequestDto)">
+            <summary>
+            Получить данынные авторизации пользователя
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Auth.IAuthenticationService.CheckUserBeforeAuthenticate(surfis_backend.Models.Dto.Auth.Authentication.AuthenticationRequestDto)">
+            <summary>
+            Проверяет, существует ли пользователь, а так же проверяет сходство паролей.
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Auth.IAuthenticationService.RefreshToken(surfis_backend.Models.Dto.Auth.Token.TokenModelThroughDto)">
+            <summary>
+            Обновить jwt токены пользователя
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Auth.IAuthenticationService.LogOut(surfis_backend.Models.Entities.Identify.User)">
+            <summary>
+            Выйти на стороне сервиса
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Services.Auth.AuthenticationService">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Auth.AuthenticationService.#ctor(surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Identify.User},Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Services.Auth.AuthenticationService.LogOut(surfis_backend.Models.Entities.Identify.User)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Auth.AuthenticationService.RefreshToken(surfis_backend.Models.Dto.Auth.Token.TokenModelThroughDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Auth.AuthenticationService.CheckUserBeforeAuthenticate(surfis_backend.Models.Dto.Auth.Authentication.AuthenticationRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Auth.AuthenticationService.Authenticate(surfis_backend.Models.Dto.Auth.Authentication.AuthenticationRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Services.IDataBaseSeederService">
+            <summary>
+            Сервис для заполнения данными первоначальными 
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.IDataBaseSeederService.SeedDatabaseUserIdentify">
+            <summary>
+            Метод, заполняющий таблицу изначальными пользователями
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.IDataBaseSeederService.SeedDatabaseSpot">
+            <summary>
+            Добавляем изначальные данные для спотов
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:surfis_backend.Services.DataBaseSeederService">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.DataBaseSeederService.#ctor(surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Identify.User},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Spot.Shift})">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Services.DataBaseSeederService.SeedDatabaseUserIdentify">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.DataBaseSeederService.SeedDatabaseSpot">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Services.Indentify.IUserService">
+            <summary>
+            Сервис для работы с пользователями
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Indentify.IUserService.GetUser">
+            <summary>
+            Получить пользователя в контроллере
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Indentify.IUserService.CheckUserBeforeRegistration(surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto)">
+            <summary>
+            Проверяем, не существует ли уже такой пользователь?
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Indentify.IUserService.Register(surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto)">
+            <summary>
+            Регистрируем нового пользователя
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Services.Indentify.UserService">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Indentify.UserService.#ctor(surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Identify.User},Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Services.Indentify.UserService.CheckUserBeforeRegistration(surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Indentify.UserService.Register(surfis_backend.Models.Dto.Auth.Register.RegisterUserRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Indentify.UserService.GetUser">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Services.Spot.ISpotService">
+            <summary>
+            Сервис, для работы со спотами
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.UpdateOnBoardingSpot(surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto)">
+            <summary>
+            Обновить спот после прохождения онбординга
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.UserIsManagerSpot(System.Guid,System.Guid)">
+            <summary>
+            Является ли пользователем менеджером этого спота?
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.UserIsWorkerSpot(System.Guid,System.Guid)">
+            <summary>
+            Является ли пользователь работником этого спота?
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.InitializeSpot(surfis_backend.Models.Dto.Spot.Admin.SpotInitialize.SpotInitializeRequestDto)">
+            <summary>
+            Инициализируем спот
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.GetSpotListForManager(surfis_backend.Models.Entities.Identify.User)">
+            <summary>
+            Получить список спотов для менеджера
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.GetSingleSpotForManager(surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerRequestDto)">
+            <summary>
+            Получить информацию для загрузки единичиного спота для менеджера
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.GetAllSpots">
+            <summary>
+            Получить все споты
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.EditInformationSingleSpot(surfis_backend.Models.Dto.Spot.Admin.EditSingleSpot.EditSingleSpotInformationRequestDto)">
+            <summary>
+            Обновить спот ( Только информация и статические данные )
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.SpotNewManager(surfis_backend.Models.Dto.Spot.Admin.SetNewSpot.SetNewSpotRequestDto)">
+            <summary>
+            Установить споту нового менеджера
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.ISpotService.GetSpotInfo(System.Guid)">
+            <summary>
+            Получить информацию о споте
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Services.Spot.SpotService">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.#ctor(surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Spot.SpotEntity},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Spot.Shift},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Staff.SpotWorker},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Spot.UserSpotManager},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Identify.User},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Others.TimeStampMap})">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.UserIsWorkerSpot(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.InitializeSpot(surfis_backend.Models.Dto.Spot.Admin.SpotInitialize.SpotInitializeRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.GetSingleSpotForManager(surfis_backend.Models.Dto.Spot.Managment.SpotGetSingleForManager.SpotGetSingleForManagerRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.GetAllSpots">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.EditInformationSingleSpot(surfis_backend.Models.Dto.Spot.Admin.EditSingleSpot.EditSingleSpotInformationRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.SpotNewManager(surfis_backend.Models.Dto.Spot.Admin.SetNewSpot.SetNewSpotRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.GetSpotListForManager(surfis_backend.Models.Entities.Identify.User)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.UserIsManagerSpot(System.Guid,System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.SpotService.UpdateOnBoardingSpot(surfis_backend.Models.Dto.Spot.Managment.SpotOnBoardingConfigure.SpotOnBoardingConfigureRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Services.Spot.IStuffService">
+            <summary>
+            Сервис для работы с сущностями работника и сменами
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.GetAllShiftWorkersShedule(surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersSchedule.GetAllShiftWorkersScheduleRequestDto)">
+            <summary>
+            Получить все данные для страницы "График работы" в меню персонала
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.GetAllSpotShifts(surfis_backend.Models.Dto.Spot.Stuff.GetSpotShifts.GetSpotShiftsRequestDto)">
+            <summary>
+            Получить все смены для спота
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.AddWorkersToShift(surfis_backend.Models.Dto.Spot.Stuff.AddWorkerToShift.AddWorkerToShiftRequestDto)">
+            <summary>
+            Добавить сотрудника на смену ( план )
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.EditSingleShiftWorker(surfis_backend.Models.Dto.Spot.Stuff.EditWorkerShiftPlan.EditWorkerShiftPlanRequestDto)">
+            <summary>
+            Обновить данные о работнике на смене ( план )
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.GetSingleShiftWorker(System.Guid)">
+            <summary>
+            Получить данные о смене
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.EditWorkerShiftPlanFact(surfis_backend.Models.Dto.Spot.Stuff.EditWorkerShiftPlanFact.EditWorkerShiftPlanFactRequestDto)">
+            <summary>
+            Обновить данные о работнике на смене ( план \ факт )
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.CreateNewWorker(surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.CreateNewWorkerRequestDto)">
+            <summary>
+            Создать нового сотрудника
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.EditShiftWorkersInfo(surfis_backend.Models.Dto.Spot.Stuff.EditShiftWorkersInfo.EditShiftWorkersInfoRequestDto)">
+            <summary>
+            Изменить общую информацию о работнике спота
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.GetWorkerInfo(System.Guid)">
+            <summary>
+            Получить общую информация о работнике спота
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.GetAllShiftWorkersListWorkers(surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersListWorkers.GetAllShiftWorkersListWorkersRequestDto)">
+            <summary>
+            Получение списка работников с общей информацией
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.EditPayWorker(surfis_backend.Models.Dto.Spot.Stuff.EditPayWorker.EditPayWorkerRequestDto)">
+            <summary>
+            Обновить информацию о часовой работе сотрудника
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.GetAllWorkersTableTime(surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.GetAllShiftWorkersTableTimeRequestDto)">
+            <summary>
+            Получение списка работников по споту в определённый промежуток, с выводом итогов
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.OpenShift(surfis_backend.Models.Dto.Spot.Barista.OpenShift.OpenShiftRequestDto)">
+            <summary>
+            Открыть смену для баристы
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.IStuffService.CloseShift(surfis_backend.Models.Dto.Spot.Barista.CloseShift.CloseShiftRequestDto)">
+            <summary>
+            Закрыть смену для баристы
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.#ctor(surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Staff.StuffWork},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Others.TimeStampMap},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Spot.Shift},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Spot.SpotEntity},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Staff.SpotWorker},surfis_backend.Repositories.IEntityBaseRepository{surfis_backend.Models.Entities.Identify.User})">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.GetAllShiftWorkersShedule(surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersSchedule.GetAllShiftWorkersScheduleRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.GetAllSpotShifts(surfis_backend.Models.Dto.Spot.Stuff.GetSpotShifts.GetSpotShiftsRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.AddWorkersToShift(surfis_backend.Models.Dto.Spot.Stuff.AddWorkerToShift.AddWorkerToShiftRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.EditSingleShiftWorker(surfis_backend.Models.Dto.Spot.Stuff.EditWorkerShiftPlan.EditWorkerShiftPlanRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.GetSingleShiftWorker(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.EditWorkerShiftPlanFact(surfis_backend.Models.Dto.Spot.Stuff.EditWorkerShiftPlanFact.EditWorkerShiftPlanFactRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.CreateNewWorker(surfis_backend.Models.Dto.Spot.Stuff.CreateNewWorker.CreateNewWorkerRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.EditShiftWorkersInfo(surfis_backend.Models.Dto.Spot.Stuff.EditShiftWorkersInfo.EditShiftWorkersInfoRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.GetWorkerInfo(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.GetAllShiftWorkersListWorkers(surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersListWorkers.GetAllShiftWorkersListWorkersRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.EditPayWorker(surfis_backend.Models.Dto.Spot.Stuff.EditPayWorker.EditPayWorkerRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Services.Spot.StuffService.GetAllWorkersTableTime(surfis_backend.Models.Dto.Spot.Stuff.GetAllShiftWorkersTableTime.GetAllShiftWorkersTableTimeRequestDto)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Utils.Cryptography.PasswrodHashHelper">
+            <summary>
+            Класс который хэширует и проверяет пароли
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Cryptography.PasswrodHashHelper.HashWithSalt(System.String,System.Int32)">
+            <summary>
+            Получить захэшированные данные о пароле
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Cryptography.PasswrodHashHelper.GetHash(System.String,System.String)">
+            <summary>
+            Захэшировать пароль с солью, для проверок
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Utils.Cryptography.HashWithSaltResult">
+            <summary>
+            Объект хэша пароля с сполью
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Utils.Cryptography.HashWithSaltResult.Salt">
+            <summary>
+            Соль пароля
+            </summary>
+        </member>
+        <member name="P:surfis_backend.Utils.Cryptography.HashWithSaltResult.Hash">
+            <summary>
+            Хэш пароля
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Cryptography.HashWithSaltResult.#ctor(System.String,System.String)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="T:surfis_backend.Utils.Cryptography.Rng">
+            <summary>
+            Класс, для генерации случайных наборов строк
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Cryptography.Rng.GenerateRandomCryptographicKey(System.Int32)">
+            <summary>
+            Сгенерировать случайную строку
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Cryptography.Rng.GenerateRandomCryptographicBytes(System.Int32)">
+            <summary>
+            Сгенерировать случайную строку
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Utils.Exceptions.ErrorHandlerMiddleware">
+            <summary>
+            Middleware для отлова ошибок в методах
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Exceptions.ErrorHandlerMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary> .ctor </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Exceptions.ErrorHandlerMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Метод, обрабатывающий вызов контроллера
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Utils.Https.BodyUtils">
+            <summary>
+            Класс, для сериализации данных с запроса
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Https.BodyUtils.GetRawBodyAsync(Microsoft.AspNetCore.Http.HttpRequest,System.Text.Encoding)">
+            <summary>
+            Получить данные с BODY c запроса
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Utils.IdentifyAttributes.IdentifyAuthAttribute">
+            <summary>
+            Кастомный аттрибут авторизации
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.IdentifyAttributes.IdentifyAuthAttribute.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Utils.IdentifyAttributes.IdentifyAuthAttribute.#ctor(surfis_backend.Models.Enums.Role)">
+            <inheritdoc />
+        </member>
+        <member name="M:surfis_backend.Utils.IdentifyAttributes.IdentifyAuthAttribute.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Utils.JWT.JwtTokenWorker">
+            <summary>
+            Класс для работы с JWT
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.JWT.JwtTokenWorker.CreateToken(System.Collections.Generic.List{System.Security.Claims.Claim})">
+            <summary>
+            Создать JWT Token на основе списка Claim's
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.JWT.JwtTokenWorker.GenerateRefreshToken">
+            <summary>
+            Сгенерировать refresh token
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.JWT.JwtTokenWorker.GetPrincipalFromExpiredToken(System.String)">
+            <summary>
+            Получить principal данные с токена ( расшифровать на claim )
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Utils.Swagger.EnumTypesSchemaFilter">
+            <summary>
+            Swagger фильтр для enum значений
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Swagger.EnumTypesSchemaFilter.#ctor(System.String)">
+            <summary>.ctor</summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Swagger.EnumTypesSchemaFilter.Apply(Microsoft.OpenApi.Models.OpenApiSchema,Swashbuckle.AspNetCore.SwaggerGen.SchemaFilterContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Utils.Swagger.ToolAttributes">
+            <summary>
+            Enum для тэгов в Swagger
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.ToolAttributes.NonWork">
+            <summary>
+            Метод не работает
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.ToolAttributes.ForManagerAttribute">
+            <summary>
+            Тэг. Только для менеджеров
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.ToolAttributes.ForAdminAttribute">
+            <summary>
+            Тэг. Только для админов
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.ToolAttributes.DebugAttribute">
+            <summary>
+            Тэг. Метод для дебага и тестирования
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.ToolAttributes.SpotTag">
+            <summary>
+            Тэг. Работа со спотом.
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.ToolAttributes.AdminPanelTag">
+            <summary>
+            Тэг. Для админ-панеле
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.ToolAttributes.AuthorizationTag">
+            <summary>
+            Тэг. Авторизация
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.ToolAttributes.UserTag">
+            <summary>
+            Тэг. Работа с авторизованными пользователями
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.ToolAttributes.ForBaristaAttriute">
+            <summary>
+            Тэг. Работа с баристой
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Utils.Swagger.BadgesSwaggerAttribute">
+            <summary>
+            Атрибут для добавления Swagger тэгов
+            </summary>
+        </member>
+        <member name="F:surfis_backend.Utils.Swagger.BadgesSwaggerAttribute.Badge">
+            <summary>
+            Тип тэга
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Swagger.BadgesSwaggerAttribute.#ctor(surfis_backend.Utils.Swagger.ToolAttributes)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Utils.Swagger.SwaggerOperationFilter">
+            <summary>
+            Технический преобразующий фильтр для swagger
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Swagger.SwaggerOperationFilter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:surfis_backend.Utils.Time.DateTimeExtensions">
+            <summary>
+            Класс, для работы со временем
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Time.DateTimeExtensions.SetKindUtc(System.Nullable{System.DateTime})">
+            <summary>
+            Добавить в DateTime UTC аттрибут
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Time.DateTimeExtensions.SetKindUtc(System.DateTime)">
+            <summary>
+            Добавить в DateTime UTC аттрибут
+            </summary>
+        </member>
+        <member name="T:surfis_backend.Utils.Time.TimeOnlyExtension">
+            <summary>
+            Класс для работы с TimeOnly, сравнение и форматирование.
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Time.TimeOnlyExtension.IsIncludeTimeInTimeGap(System.TimeOnly,System.TimeOnly,System.TimeOnly)">
+            <summary>
+            Входит ли <paramref name="timeEntry"/> во временной промежуток [ <paramref name="timeGapLeft"/>; <paramref name="timeGapRight"/> ]?
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Time.TimeOnlyExtension.ParseTimeUntill(System.TimeOnly,System.Int32)">
+            <summary>
+            Сформатировать значение в человеко-читаемый вид. Вернёт null, если строку не удасться преобразовать
+            </summary>
+        </member>
+        <member name="M:surfis_backend.Utils.Time.TimeOnlyExtension.TimeIncludedIn(System.TimeOnly,System.TimeOnly,System.TimeOnly,System.TimeOnly)">
+            <summary>
+            Входит ли промежуток [ <paramref name="inputTimeLeft"/> ; <paramref name="inputTimeRight"/> ] в промежуток [ <paramref name="scopeTimeLeft"/> ; <paramref name="scopeTimeRight"/> ]
+            </summary>
+        </member>
+    </members>
+</doc>
