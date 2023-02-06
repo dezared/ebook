@@ -22,6 +22,7 @@
 Для запуска приложения вопсользуетесь следующими командами:
 
     # Для запуска:
+    ../ebook-frontend:$ npm i
     ../ebook-frontend:$ npm run dev
     # Линтировка и проверка типов TS:
     ../ebook-frontend:$ npm run lint
